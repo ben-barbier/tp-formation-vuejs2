@@ -82,11 +82,15 @@ const vm = new Vue({
             movie.isFavorite = !movie.isFavorite;
         },
         filter(search) {
-            if (!search.trim()) {
-                this.movies = this.movies.map(movie => ({...movie, isVisible: true}));
-            } else {
-                this.movies = this.movies.map(movie => ({...movie, isVisible: movie.title.toUpperCase().includes(search.trim().toUpperCase())}));
-            }
+            this.movies = this.movies.map(movie => ({
+                ...movie,
+                isVisible: movie.title.toUpperCase().includes(search.toUpperCase())
+            }));
+        }
+    },
+    computed: {
+        visibleMovies() {
+            return this.movies.filter(movie => movie.isVisible);
         }
     },
     beforeCreate() {

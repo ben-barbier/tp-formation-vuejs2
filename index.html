@@ -37,11 +37,10 @@
                 <div class="field">
                     <label class="label">Search</label>
                     <div class="control">
-                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder="" v-model="searchText">
+                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder="" v-model.trim="searchText">
                     </div>
                 </div>
-                <!-- FIXME : 🚨 Ne pas utiliser de v-for sur le même élément qu'un v-if (computed) -->
-                <div v-for="movie in movies" v-if="movie.isVisible" class="card card-result">
+                <div v-for="movie in visibleMovies" class="card card-result">
                     <div class="card-header">
                         <p class="card-header-title">
                             <span v-if="!movie.isEditing">{{ movie.id }} - {{ movie.title }}</span>
