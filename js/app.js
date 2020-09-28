@@ -10,8 +10,8 @@ console.log(Vue.version);
 // ✅ 6.  Write a method that toggles the value of isFavorite.
 // ✅ 7.  Bind the click on the star icon button to toggle favorite state.
 // ✅ 8. We want to bind a  isFavorite  class to this button to indicate the favorite state.
-// 9.  Display the list of genres in tags
-// 10. In the form, we want to trigger user input & assign it to a model. The user can trigger a research by pressing enter.
+// ✅ 9.  Display the list of genres in tags
+// ✅ 10. In the form, we want to trigger user input & assign it to a model. The user can trigger a research by pressing enter.
 
 const vm = new Vue({
     el: '#app',
@@ -23,7 +23,7 @@ const vm = new Vue({
             date: '',
             content: '',
             tags: [],
-            editing: false,
+            isEditing: false,
         },
         movies: [
             {
@@ -34,7 +34,6 @@ const vm = new Vue({
                 tags: ['Action', 'Drame', 'Romance'],
                 content: `Jeune as du pilotage et tête brûlée d'une école réservée à l'élite de l'aéronavale US ("Top Gun"), Pete Mitchell, dit "Maverick", tombe sous le charme d'une instructrice alors qu'il est en compétition pour le titre du meilleur pilote...`,
                 isFavorite: false,
-                editing: false,
             },
             {
                 id: 2,
@@ -49,7 +48,6 @@ const vm = new Vue({
                     Yoda et Obi Wan se lancent à la poursuite des Sith. La traque se conclut par un spectaculaire combat au sabre entre Anakin
                     et Obi Wan, qui décidera du sort de la galaxie.`,
                 isFavorite: false,
-                editing: false,
             },
             {
                 id: 3,
@@ -62,9 +60,9 @@ const vm = new Vue({
                     guérison, il va devenir Deadpool. Armé de ses nouvelles capacités et d'un humour noir survolté, Deadpool va traquer l'homme
                     qui a bien failli anéantir sa vie.`,
                 isFavorite: false,
-                editing: false,
             },
-        ]
+        ].map(movie => ({...movie, isEditing: false, isVisible: true})),
+        searchText: ''
     },
     methods: {
         addMovie(newMovie) {
@@ -73,15 +71,22 @@ const vm = new Vue({
             this.newMovie = {title: '', image: '', date: '', content: '', tags: []};
         },
         editMovie(movie) {
-            this.movies = this.movies.map(m => ({...m, editing: m.id === movie.id}));
+            this.movies = this.movies.map(m => ({...m, isEditing: m.id === movie.id}));
         },
         saveEditedMovie(editedMovie) {
             this.movies = this.movies
                 .map(movie => movie.id === editedMovie.id ? editedMovie : movie)
-                .map(movie => ({...movie, editing: false}));
+                .map(movie => ({...movie, isEditing: false}));
         },
         toggleFavorite(movie) {
             movie.isFavorite = !movie.isFavorite;
+        },
+        filter(search) {
+            if (!search.trim()) {
+                this.movies = this.movies.map(movie => ({...movie, isVisible: true}));
+            } else {
+                this.movies = this.movies.map(movie => ({...movie, isVisible: movie.title.toUpperCase().includes(search.trim().toUpperCase())}));
+            }
         }
     },
     beforeCreate() {

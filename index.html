@@ -37,15 +37,16 @@
                 <div class="field">
                     <label class="label">Search</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="">
+                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder="" v-model="searchText">
                     </div>
                 </div>
-                <div v-for="movie in movies" class="card card-result">
+                <!-- FIXME : 🚨 Ne pas utiliser de v-for sur le même élément qu'un v-if (computed) -->
+                <div v-for="movie in movies" v-if="movie.isVisible" class="card card-result">
                     <div class="card-header">
                         <p class="card-header-title">
-                            <span v-if="!movie.editing">{{ movie.id }} - {{ movie.title }}</span>
+                            <span v-if="!movie.isEditing">{{ movie.id }} - {{ movie.title }}</span>
                             <input v-else type="text" v-model="movie.title">
-                            <i v-if="!movie.editing" class="fa fa-edit" @click="editMovie(movie)"></i>
+                            <i v-if="!movie.isEditing" class="fa fa-edit" @click="editMovie(movie)"></i>
                             <i v-else class="fa fa-save" @click="saveEditedMovie(movie)"></i>
                         </p>
                         <a class="card-header-icon">
@@ -66,7 +67,7 @@
                                 <p class="tags">
                                     <span class="tag" v-for="tag in movie.tags">{{ tag }}</span>
                                 </p>
-                                <div class="content" v-if="!movie.editing">{{ movie.content }}</div>
+                                <div class="content" v-if="!movie.isEditing">{{ movie.content }}</div>
                                 <div class="content" v-else><textarea v-model="movie.content"></textarea></div>
                             </div>
                         </div>
