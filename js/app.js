@@ -4,7 +4,7 @@ console.log(Vue.version);
 // This exercice will show us how to easily use directives.
 // ✅ 1.  Create a new array for your movies
 // ✅ 2.  Display this array as a loop in your template
-// 3.  Create a form that allows us to create a movie
+// ✅ 3.  Create a form that allows us to create a movie
 // 4.  Display a pen icon next to the title's movie.
 // 5.  When clicked we must have the ability to edit movie
 // 6.  Write a method that toggles the value of isFavorite.
@@ -16,6 +16,12 @@ const vm = new Vue({
     el: '#app',
     data: {
         title: 'Hello ciné',
+        newMovie: {
+            title: '',
+            image: '',
+            date: '',
+            content: '',
+        },
         movies: [
             {
                 title: 'TOP GUN',
@@ -23,7 +29,7 @@ const vm = new Vue({
                 date: '17 septembre 1986',
                 tags: ['Action', 'Drame', 'Romance'],
                 content: `Jeune as du pilotage et tête brûlée d'une école réservée à l'élite de l'aéronavale US ("Top Gun"), Pete Mitchell, dit "Maverick", tombe sous le charme d'une instructrice alors qu'il est en compétition pour le titre du meilleur pilote...`,
-                isFavorite: false
+                isFavorite: false,
             },
             {
                 title: 'Star Wars : Episode III - La Revanche des Sith',
@@ -50,6 +56,11 @@ const vm = new Vue({
                 isFavorite: false
             }
         ]
+    },
+    methods: {
+        addMovie(newMovie) {
+            this.movies = [...this.movies, newMovie];
+        }
     },
     beforeCreate() {
         // Les data ne sont pas encore renseignées 🛑

@@ -63,11 +63,37 @@
                   </p>
                   <div class="content">{{ movie.content }}</div>
                 </div>
-              </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-result">
+                    <div class="card-header">
+                        <p class="card-header-title">Ajouter un film</p>
+                    </div>
+                    <div class="card-content">
+                        <label style="display: inline-block; width: 150px" for="title">Titre</label>
+                        <input id="title" v-model="newMovie.title" type="text">
+                        <br>
+                        <br>
+                        <label style="display: inline-block; width: 150px" for="desc">Description</label>
+                        <input id="desc" v-model="newMovie.content" type="text">
+                        <br>
+                        <br>
+                        <label style="display: inline-block; width: 150px" for="img">Image</label>
+                        <input id="img" v-model="newMovie.image" type="text">
+                        <br>
+                        <br>
+                        <label style="display: inline-block; width: 150px" for="released">Date</label>
+                        <input id="released" v-model="newMovie.date" type="text">
+                        <br>
+                        <br>
+                        <button type="button" @click="addMovie(newMovie)">Sauvegarder</button>
+                    </div>
+                </div>
+
             </div>
-          </div>
         </div>
-      </div>
     </section>
   </div>
 </body>
