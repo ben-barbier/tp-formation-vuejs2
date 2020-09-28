@@ -7,9 +7,10 @@ console.log(Vue.version);
 // ✅ 3.  Create a form that allows us to create a movie
 // ✅ 4.  Display a pen icon next to the title's movie.
 // ✅ 5.  When clicked we must have the ability to edit movie
-// 6.  Write a method that toggles the value of isFavorite.
-// 7.  Bind the click on the star icon button to toggle favorite state.
-// 8. We want to bind a  is­favorite  class to this button to indicate the favorite state. 9.  Display the list of genres in tags
+// ✅ 6.  Write a method that toggles the value of isFavorite.
+// ✅ 7.  Bind the click on the star icon button to toggle favorite state.
+// ✅ 8. We want to bind a  isFavorite  class to this button to indicate the favorite state.
+// 9.  Display the list of genres in tags
 // 10. In the form, we want to trigger user input & assign it to a model. The user can trigger a research by pressing enter.
 
 const vm = new Vue({
@@ -78,6 +79,9 @@ const vm = new Vue({
             this.movies = this.movies
                 .map(movie => movie.id === editedMovie.id ? editedMovie : movie)
                 .map(movie => ({...movie, editing: false}));
+        },
+        toggleFavorite(movie) {
+            movie.isFavorite = !movie.isFavorite;
         }
     },
     beforeCreate() {

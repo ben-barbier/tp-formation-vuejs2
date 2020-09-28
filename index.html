@@ -48,8 +48,8 @@
                             <i v-if="!movie.editing" class="fa fa-edit" @click="editMovie(movie)"></i>
                             <i v-else class="fa fa-save" @click="saveEditedMovie(movie)"></i>
                         </p>
-                        <a class="card-header-icon" v-if="movie.isFavorite">
-                            <span class="icon is-favorite">
+                        <a class="card-header-icon">
+                            <span class="icon" :class="{'is-favorite': movie.isFavorite}" @click="toggleFavorite(movie)">
                               <i class="fa fa-star"></i>
                             </span>
                         </a>
