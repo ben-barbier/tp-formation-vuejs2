@@ -30,32 +30,7 @@
                         @save-movie="saveEditedMovie($event)"
                     ></movie-card>
 
-                    <div class="card card-result">
-                        <div class="card-header">
-                            <p class="card-header-title">Ajouter un film</p>
-                        </div>
-                        <div class="card-content">
-                            <form @submit.prevent="addMovie(newMovie)">
-                                <label style="display: inline-block; width: 150px" for="title">Titre</label>
-                                <input id="title" v-model="newMovie.title" type="text" />
-                                <br />
-                                <br />
-                                <label style="display: inline-block; width: 150px" for="desc">Description</label>
-                                <input id="desc" v-model="newMovie.content" type="text" />
-                                <br />
-                                <br />
-                                <label style="display: inline-block; width: 150px" for="img">Image</label>
-                                <input id="img" v-model="newMovie.image" type="text" />
-                                <br />
-                                <br />
-                                <label style="display: inline-block; width: 150px" for="released">Date</label>
-                                <input id="released" v-model="newMovie.date" type="text" />
-                                <br />
-                                <br />
-                                <button type="submit">Sauvegarder</button>
-                            </form>
-                        </div>
-                    </div>
+                    <add-movie @add-movie="addMovie($event)"></add-movie>
                 </div>
             </div>
         </section>
@@ -67,6 +42,7 @@
 import { getMovies } from '@/data/api';
 import MovieCard from '@/components/MovieCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import AddMovie from '@/components/AddMovie.vue';
 import { Component, Vue } from 'vue-property-decorator';
 import { Movie } from '@/models/movie.model';
 
@@ -74,26 +50,16 @@ import { Movie } from '@/models/movie.model';
     components: {
         MovieCard,
         SearchBar,
+        AddMovie,
     },
 })
 export default class Home extends Vue {
     title = 'Hello ciné';
     movies: Movie[] = [];
-    newMovie: Movie = {
-        title: '',
-        image: '',
-        date: '',
-        content: '',
-        tags: [],
-        isEditing: false,
-        isVisible: true,
-        isFavorite: false,
-    };
 
     addMovie(newMovie: Movie) {
         const nextId = Math.max(...this.movies.map(movie => movie.id || 0)) + 1;
         this.movies = [...this.movies, { ...newMovie, id: nextId }];
-        this.newMovie = { ...this.newMovie, title: '', image: '', date: '', content: '' };
     }
 
     editMovie(movie: Movie) {
