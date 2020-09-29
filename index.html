@@ -37,10 +37,12 @@
                 <div class="field">
                     <label class="label">Search</label>
                     <div class="control">
-                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder="" v-model.trim="searchText">
+                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder=""
+                               v-model.trim="searchText">
                     </div>
                 </div>
-                <div v-for="movie in visibleMovies" class="card card-result">
+                <!-- 💡 : Il est recommandé de fournir une key avec v-for chaque fois que possible -->
+                <div v-for="movie in visibleMovies" :key="movie.id" class="card card-result">
                     <div class="card-header">
                         <p class="card-header-title">
                             <span v-if="!movie.isEditing">{{ movie.id }} - {{ movie.title }}</span>
@@ -49,7 +51,8 @@
                             <i v-else class="fa fa-save" @click="saveEditedMovie(movie)"></i>
                         </p>
                         <a class="card-header-icon">
-                            <span class="icon" :class="{'is-favorite': movie.isFavorite}" @click="toggleFavorite(movie)">
+                            <span class="icon" :class="{'is-favorite': movie.isFavorite}"
+                                  @click="toggleFavorite(movie)">
                               <i class="fa fa-star"></i>
                             </span>
                         </a>
@@ -78,23 +81,25 @@
                         <p class="card-header-title">Ajouter un film</p>
                     </div>
                     <div class="card-content">
-                        <label style="display: inline-block; width: 150px" for="title">Titre</label>
-                        <input id="title" v-model="newMovie.title" type="text">
-                        <br>
-                        <br>
-                        <label style="display: inline-block; width: 150px" for="desc">Description</label>
-                        <input id="desc" v-model="newMovie.content" type="text">
-                        <br>
-                        <br>
-                        <label style="display: inline-block; width: 150px" for="img">Image</label>
-                        <input id="img" v-model="newMovie.image" type="text">
-                        <br>
-                        <br>
-                        <label style="display: inline-block; width: 150px" for="released">Date</label>
-                        <input id="released" v-model="newMovie.date" type="text">
-                        <br>
-                        <br>
-                        <button type="button" @click="addMovie(newMovie)">Sauvegarder</button>
+                        <form @submit.prevent="addMovie(newMovie)">
+                            <label style="display: inline-block; width: 150px" for="title">Titre</label>
+                            <input id="title" v-model="newMovie.title" type="text">
+                            <br>
+                            <br>
+                            <label style="display: inline-block; width: 150px" for="desc">Description</label>
+                            <input id="desc" v-model="newMovie.content" type="text">
+                            <br>
+                            <br>
+                            <label style="display: inline-block; width: 150px" for="img">Image</label>
+                            <input id="img" v-model="newMovie.image" type="text">
+                            <br>
+                            <br>
+                            <label style="display: inline-block; width: 150px" for="released">Date</label>
+                            <input id="released" v-model="newMovie.date" type="text">
+                            <br>
+                            <br>
+                            <button type="submit">Sauvegarder</button>
+                        </form>
                     </div>
                 </div>
 

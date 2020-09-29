@@ -24,6 +24,7 @@ const vm = new Vue({
             content: '',
             tags: [],
             isEditing: false,
+            isVisible: true,
         },
         movies: [
             {
@@ -68,7 +69,7 @@ const vm = new Vue({
         addMovie(newMovie) {
             const nextId = Math.max(...this.movies.map(movie => movie.id)) + 1;
             this.movies = [...this.movies, {...newMovie, id: nextId}];
-            this.newMovie = {title: '', image: '', date: '', content: '', tags: []};
+            this.newMovie = {...this.newMovie, title: '', image: '', date: '', content: ''};
         },
         editMovie(movie) {
             this.movies = this.movies.map(m => ({...m, isEditing: m.id === movie.id}));
@@ -92,6 +93,10 @@ const vm = new Vue({
         visibleMovies() {
             return this.movies.filter(movie => movie.isVisible);
         }
+        // 💡 : Possibilité de définir 1 getter et 1 setter sur 1 computed (base = c'est 1 getter)
+    },
+    watch: {
+        // 🚨: à voir :-)
     },
     beforeCreate() {
         // Les data ne sont pas encore renseignées 🛑
@@ -109,12 +114,17 @@ const vm = new Vue({
         // this.$el = element avec les valeurs interprétées dans le template
         console.log('mounted', this.title, this.$el);
     },
+    beforeUpdate() {
+        // 🚨: à voir :-)
+    },
+    updated() {
+        // 🚨: à voir :-)
+    },
     beforeDestroy() {
         console.log('beforeDestroy', this.title, this.$el);
     },
     destroyed() {
         console.log('destroyed', this.title, this.$el);
     },
-
 });
 
