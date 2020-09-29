@@ -1,20 +1,5 @@
 <template>
     <div class="home">
-        <div class="container" style="background: #fdcb6e;">
-            <nav class="navbar">
-                <div class="navbar-brand">
-                    <a class="navbar-item" href="index.html">
-                        {{ title }}
-                    </a>
-                </div>
-                <div class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item is-active" href="index.html">Search</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
         <section class="hero" style="background: #fdcb6e;">
             <div class="hero-body">
                 <div class="container">
@@ -141,10 +126,6 @@ export default class Home extends Vue {
 
 <!-- 💡 : Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.navbar-item.is-active {
-    color: #fdcb6e !important;
-}
-
 .card-result {
     margin-bottom: 20px;
 }
