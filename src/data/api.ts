@@ -1,5 +1,9 @@
-const getMovies = function() {
-    const movies = [
+import { Movie } from '@/models/movie.model';
+
+// 💡 : Exemple complet d'API : https://github.com/coding-blocks-archives/realworld-vue-typescript/blob/master/src/store/api.ts
+
+export function getMovies(): Promise<Movie[]> {
+    const movies: Movie[] = [
         {
             id: 1,
             title: 'TOP GUN',
@@ -35,7 +39,7 @@ const getMovies = function() {
                     qui a bien failli anéantir sa vie.`,
             isFavorite: false,
         },
-    ].map(movie => ({...movie, isEditing: false, isVisible: true}));
+    ].map(movie => ({ ...movie, isEditing: false, isVisible: true }));
 
     return new Promise(resolve => {
         setTimeout(() => resolve(movies), 300);
