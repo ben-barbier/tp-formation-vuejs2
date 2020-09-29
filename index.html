@@ -34,47 +34,19 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">{{ title }}</h1>
-                <div class="field">
-                    <label class="label">Search</label>
-                    <div class="control">
-                        <input @keyup.enter="filter(searchText)" class="input" type="text" placeholder=""
-                               v-model.trim="searchText">
-                    </div>
-                </div>
+                <search-bar
+                    @search="filter($event)"
+                ></search-bar>
+
                 <!-- 💡 : Il est recommandé de fournir une key avec v-for chaque fois que possible -->
-                <div v-for="movie in visibleMovies" :key="movie.id" class="card card-result">
-                    <div class="card-header">
-                        <p class="card-header-title">
-                            <span v-if="!movie.isEditing">{{ movie.id }} - {{ movie.title }}</span>
-                            <input v-else type="text" v-model="movie.title">
-                            <i v-if="!movie.isEditing" class="fa fa-edit" @click="editMovie(movie)"></i>
-                            <i v-else class="fa fa-save" @click="saveEditedMovie(movie)"></i>
-                        </p>
-                        <a class="card-header-icon">
-                            <span class="icon" :class="{'is-favorite': movie.isFavorite}"
-                                  @click="toggleFavorite(movie)">
-                              <i class="fa fa-star"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-                                <figure class="image is-128x200">
-                                    <img :src="movie.image" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <p>{{ movie.date }}</p>
-                                <p class="tags">
-                                    <span class="tag" v-for="tag in movie.tags">{{ tag }}</span>
-                                </p>
-                                <div class="content" v-if="!movie.isEditing">{{ movie.content }}</div>
-                                <div class="content" v-else><textarea v-model="movie.content"></textarea></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <movie-card
+                    v-for="movie in visibleMovies"
+                    :key="movie.id"
+                    :movie="movie"
+                    @edit-movie="editMovie(movie)"
+                    @save-movie="saveEditedMovie($event)"
+                >
+                </movie-card>
 
                 <div class="card card-result">
                     <div class="card-header">
@@ -107,7 +79,9 @@
         </div>
     </section>
 </div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/api.js"></script>
 <script src="js/app.js"></script>
 </html>

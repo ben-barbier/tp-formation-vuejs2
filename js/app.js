@@ -1,6 +1,6 @@
 console.log(Vue.version);
 
-// TODOS :
+// Jour 1 :
 // This exercice will show us how to easily use directives.
 // ✅ 1.  Create a new array for your movies
 // ✅ 2.  Display this array as a loop in your template
@@ -12,6 +12,92 @@ console.log(Vue.version);
 // ✅ 8. We want to bind a  isFavorite  class to this button to indicate the favorite state.
 // ✅ 9.  Display the list of genres in tags
 // ✅ 10. In the form, we want to trigger user input & assign it to a model. The user can trigger a research by pressing enter.
+
+// Jour 2 :
+// ✅ In this exercise we'll create a  movie-card  component that will only display some text.
+// ✅ 1. Declare a  movie-card component using the  Vue.component method. This component must contain:
+//      ✅ a title
+//      ✅ a description
+//      ✅ an image
+//      ✅ a date of creation
+//      ✅ a list of genres
+//      ⏳ a boolean 'isFavorite'
+// ✅ 2. Create a  template  for our component. For now, only display textual data.
+// ✅ 3. Let's now pass the content mentioned above as props to our component. Display each prop values accordingly using interpolation.
+// ✅ 4. Using  isFavorite , we want to display the computed property {{ title }} starred!
+//    or {{ title }} not starred! based on the value of the boolean.
+// ✅ 5. In order to simulate a real-world example, you must mock your data into a file named  js/api.js .
+//    You  can  access  these  values  via  the  mockData object.  Use  your  newly  created  component  to
+//    display three cards in your template. Don't forget to give them prop values.
+// ✅ 6. Create a new component for search section.
+// ✅ 7. You must create a communication bond between your card components & your search component.
+
+Vue.component('search-bar', {
+    data: function () {
+        return {
+            searchText: '',
+        }
+    },
+    methods: {},
+    template: `
+<div class="field">
+    <label class="label">Search</label>
+    <div class="control">
+        <input @keyup.enter="$emit('search', searchText)" class="input" type="text" placeholder=""
+               v-model.trim="searchText">
+    </div>
+</div>
+`
+});
+
+Vue.component('movie-card', {
+    props: ['movie'],
+    computed: {
+        title() {
+            return this.movie.isFavorite ? `${this.movie.title} - ⭐️` : this.movie.title;
+        }
+    },
+    methods: {
+        toggleFavorite(movie) {
+            movie.isFavorite = !movie.isFavorite;
+        },
+    },
+    template: `
+<div class="card card-result">
+    <div class="card-header">
+        <p class="card-header-title">
+            <span v-if="!movie.isEditing">{{ movie.id }} - {{ title }}</span>
+            <input v-else type="text" v-model="movie.title">
+            <i v-if="!movie.isEditing" class="fa fa-edit" @click="$emit('edit-movie')"></i>
+            <i v-else class="fa fa-save" @click="$emit('save-movie', movie)"></i>
+        </p>
+        <a class="card-header-icon">
+            <span class="icon" :class="{'is-favorite': movie.isFavorite}"
+                  @click="toggleFavorite(movie)">
+              <i class="fa fa-star"></i>
+            </span>
+        </a>
+    </div>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-128x200">
+                    <img :src="movie.image" alt="Image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p>{{ movie.date }}</p>
+                <p class="tags">
+                    <span class="tag" v-for="tag in movie.tags">{{ tag }}</span>
+                </p>
+                <div class="content" v-if="!movie.isEditing">{{ movie.content }}</div>
+                <div class="content" v-else><textarea v-model="movie.content"></textarea></div>
+            </div>
+        </div>
+    </div>
+</div>
+`,
+});
 
 const vm = new Vue({
     el: '#app',
@@ -26,44 +112,7 @@ const vm = new Vue({
             isEditing: false,
             isVisible: true,
         },
-        movies: [
-            {
-                id: 1,
-                title: 'TOP GUN',
-                image: 'http://fr.web.img6.acsta.net/c_215_290/pictures/15/06/12/12/58/422779.jpg',
-                date: '17 septembre 1986',
-                tags: ['Action', 'Drame', 'Romance'],
-                content: `Jeune as du pilotage et tête brûlée d'une école réservée à l'élite de l'aéronavale US ("Top Gun"), Pete Mitchell, dit "Maverick", tombe sous le charme d'une instructrice alors qu'il est en compétition pour le titre du meilleur pilote...`,
-                isFavorite: false,
-            },
-            {
-                id: 2,
-                title: 'Star Wars : Episode III - La Revanche des Sith',
-                image: 'http://fr.web.img4.acsta.net/c_215_290/medias/nmedia/18/35/53/23/18423997.jpg',
-                date: '18 mai 2005',
-                tags: ['Aventure', 'Action', 'Science fiction'],
-                content: `La Guerre des Clones fait rage. Une franche hostilité oppose désormais le Chancelier Palpatine au Conseil Jedi. Anakin Skywalker,
-                    jeune Chevalier Jedi pris entre deux feux, hésite sur la conduite à tenir. Séduit par la promesse d'un pouvoir sans précédent,
-                    tenté par le côté obscur de la Force, il prête allégeance au maléfique Darth Sidious et devient Dark Vador. Les Seigneurs
-                    Sith s'unissent alors pour préparer leur revanche, qui commence par l'extermination des Jedi. Seuls rescapés du massacre,
-                    Yoda et Obi Wan se lancent à la poursuite des Sith. La traque se conclut par un spectaculaire combat au sabre entre Anakin
-                    et Obi Wan, qui décidera du sort de la galaxie.`,
-                isFavorite: false,
-            },
-            {
-                id: 3,
-                title: 'Deadpool',
-                image: 'http://fr.web.img5.acsta.net/c_215_290/pictures/16/01/19/16/49/249124.jpg',
-                date: '10 février 2016',
-                tags: ['Comédie', 'Action', 'Fantastique'],
-                content: `Deadpool, est l'anti-héros le plus atypique de l'univers Marvel. A l'origine, il s'appelle Wade Wilson : un ancien militaire
-                    des Forces Spéciales devenu mercenaire. Après avoir subi une expérimentation hors norme qui va accélérer ses pouvoirs de
-                    guérison, il va devenir Deadpool. Armé de ses nouvelles capacités et d'un humour noir survolté, Deadpool va traquer l'homme
-                    qui a bien failli anéantir sa vie.`,
-                isFavorite: false,
-            },
-        ].map(movie => ({...movie, isEditing: false, isVisible: true})),
-        searchText: ''
+        movies: []
     },
     methods: {
         addMovie(newMovie) {
@@ -79,9 +128,6 @@ const vm = new Vue({
                 .map(movie => movie.id === editedMovie.id ? editedMovie : movie)
                 .map(movie => ({...movie, isEditing: false}));
         },
-        toggleFavorite(movie) {
-            movie.isFavorite = !movie.isFavorite;
-        },
         filter(search) {
             this.movies = this.movies.map(movie => ({
                 ...movie,
@@ -89,6 +135,7 @@ const vm = new Vue({
             }));
         }
     },
+    // 🚨: Les computed ne doivent pas modifier les données (ce sont juste des getters)
     computed: {
         visibleMovies() {
             return this.movies.filter(movie => movie.isVisible);
@@ -107,6 +154,9 @@ const vm = new Vue({
         console.log('created', this.title, this.$el); // => 'Hello ciné'
     },
     beforeMount() {
+        // 💡 : Les appels d'API se font dans le 'created' ou 'beforeMount'
+        getMovies().then(movies => this.movies = movies);
+
         // this.$el = element avec les moustaches {{...}} dans le template
         console.log('beforeMount', this.title, this.$el);
     },
