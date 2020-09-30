@@ -3,11 +3,16 @@ import { Movie } from '@/models/movie.model';
 
 // 💡 : Exemple complet d'API : https://github.com/coding-blocks-archives/realworld-vue-typescript/blob/master/src/store/api.ts
 
-export const moviesApi = axios.create({
+const moviesApi = axios.create({
     baseURL: 'http://localhost:4000/rest/movies',
 });
 
+function timeout(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function fetchMovies(): Promise<Movie[]> {
+    await timeout(1200);
     const response = await moviesApi.get(`/`);
     return response.data;
 }

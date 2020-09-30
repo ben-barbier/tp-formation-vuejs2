@@ -30,7 +30,7 @@ import SearchBar from '@/components/SearchBar.vue';
 import AddMovie from '@/components/AddMovie.vue';
 import { Component, Vue } from 'vue-property-decorator';
 import { Movie } from '@/models/movie.model';
-import { fetchMovies, updateMovieFavorite } from '@/data/movies.api';
+import { updateMovieFavorite } from '@/data/movies.api';
 
 @Component({
     components: {
@@ -99,10 +99,10 @@ export default class Home extends Vue {
         console.log('created', this.title, this.$el); // => 'Hello ciné'
     }
 
-    async beforeMount() {
+    beforeMount() {
         // 💡 : Les appels d'API se font dans le 'created' ou 'beforeMount'
-        this.movies = await fetchMovies();
-        this.movies = this.movies.map(movie => ({ ...movie, isVisible: true, isEditing: false }));
+        this.$store.dispatch('loadMovies');
+        this.movies = this.$store.getters.getMovies;
 
         // this.$el = element avec les moustaches {{...}} dans le template
         console.log('beforeMount', this.title, this.$el);
