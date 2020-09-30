@@ -52,7 +52,7 @@ export default class Home extends Vue {
         this.movies = this.movies.map(m => ({ ...m, isEditing: m.id === movie.id }));
     }
 
-    async saveEditedMovie(editedMovie: Movie) {
+    saveEditedMovie(editedMovie: Movie) {
         this.movies = this.movies
             .map(movie => (movie.id === editedMovie.id ? editedMovie : movie))
             .map(movie => ({
@@ -77,11 +77,14 @@ export default class Home extends Vue {
         const updatedMovie = { ...movie, isFavorite: !movie.isFavorite };
         await updateMovieFavorite(updatedMovie.id, updatedMovie.isFavorite);
         this.saveEditedMovie(updatedMovie);
+        if (updatedMovie.isFavorite) {
+            this.$router.push({ name: 'MovieDetail', params: { id: movie.id } });
+        }
     }
 
-    // watch: {
-    //     // TODO: 🚨: à voir :-)
-    // },
+    watch() {
+        // 🚨: Eviter au maximum l'utilisation du watch (ca s'execute à chaque cycle de détection du changement)
+    }
 
     // --------------------------------------------------------------- //
     // -------------------- ⏱ Life Cycle hooks ⏱ -------------------- //
