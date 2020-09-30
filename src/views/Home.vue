@@ -126,6 +126,11 @@ export default class Home extends Vue {
         console.log('destroyed', this.title, this.$el);
     }
 
+    beforeRouteUpdated(to, from, next) {
+        debugger;
+        // Do something
+    }
+
     // --------------------------------------------------------------- //
     // ----------------- ⏱ Life Cycle hooks ⏱ (fin) ----------------- //
     // --------------------------------------------------------------- //

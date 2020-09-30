@@ -3,6 +3,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
@@ -10,6 +11,7 @@ Vue.config.productionTip = false;
 new Vue({
     router,
     store,
+    vuetify,
     render: h => h(App),
 }).$mount('#app');
 
@@ -46,4 +48,16 @@ new Vue({
 // ✅ 7. You must create a communication bond between your card components & your search component.
 
 // Jour 2 - Aprem :
-// 1. Migration avec une version générée par vue-cli
+// ✅ 1. Migration avec une version générée par vue-cli
+
+// Jour 3 - Matin - Routing
+// ✅ 1. Install  vue -router # Using npm
+//      npm install  --save vue -router
+// 1.  Create  a  new  route  named  'movies'  that  will  render  our  component.  This  route  has  to  match  the default path.
+// 2.  Now we want to have a new route 'favorites' that will display our favorites movies. We also want a link to navigate to this component.
+// 3.  This 'favorites' route has to be also aliased with '/starred'
+// 4.  In  each  card,  we  would  like  to  have  a  navigation  button  to  navigate  to  a  new  route  that  displays details about the movie. The routes have to match with an ID that will be passed as a prop.
+// 5.  When  a  user  clicks  to  favorite  a  movie,  we  also  want  the  app  to  redirect  him  to  the  details  of  the movie.
+
+// Jour 3 - Aprem :
+// ...
