@@ -41,7 +41,6 @@ import { updateMovieFavorite } from '@/data/movies.api';
 })
 export default class Home extends Vue {
     title = 'Hello ciné';
-    movies: Movie[] = [];
 
     addMovie(newMovie: Movie) {
         const nextId = Math.max(...this.movies.map(movie => movie.id || 0)) + 1;
@@ -73,6 +72,10 @@ export default class Home extends Vue {
         return this.movies.filter(movie => movie.isVisible);
     }
 
+    get movies(): Movie[] {
+        return this.$store.getters.getMovies;
+    }
+
     async toggleFavorite(movie: Movie) {
         const updatedMovie = { ...movie, isFavorite: !movie.isFavorite };
         await updateMovieFavorite(updatedMovie.id, updatedMovie.isFavorite);
@@ -102,7 +105,6 @@ export default class Home extends Vue {
     beforeMount() {
         // 💡 : Les appels d'API se font dans le 'created' ou 'beforeMount'
         this.$store.dispatch('loadMovies');
-        this.movies = this.$store.getters.getMovies;
 
         // this.$el = element avec les moustaches {{...}} dans le template
         console.log('beforeMount', this.title, this.$el);
