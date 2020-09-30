@@ -127,7 +127,6 @@ export default class Home extends Vue {
     }
 
     beforeRouteUpdated(to, from, next) {
-        debugger;
         // Do something
     }
 

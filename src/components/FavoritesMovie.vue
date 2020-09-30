@@ -8,12 +8,17 @@
         <v-card-text>
             <v-chip v-for="genre in movie.genres" :key="genre">{{ genre }}</v-chip>
         </v-card-text>
+        <v-card-actions>
+            <router-link :to="{ name: 'MovieDetail', params: { id: movie.id } }">
+                <v-btn elevation="2" color="primary"> Edit</v-btn>
+            </router-link>
+        </v-card-actions>
     </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Movie } from '../models/movie.model';
+import { Movie } from '@/models/movie.model';
 
 @Component
 export default class FavoritesMovie extends Vue {

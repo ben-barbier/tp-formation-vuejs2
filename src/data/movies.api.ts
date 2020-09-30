@@ -12,6 +12,11 @@ export async function fetchMovies(): Promise<Movie[]> {
     return response.data;
 }
 
+export async function fetchMovie(id: number): Promise<Movie> {
+    const response = await moviesApi.get(`/${id}`);
+    return response.data;
+}
+
 export async function updateMovieFavorite(movieId: number, isFavorite: boolean): Promise<Movie> {
     const response = await moviesApi.post(`/${movieId}/favorites`, { isFavorite });
     return response.data;

@@ -16,7 +16,6 @@ export default class Favorites extends Vue {
 
     async beforeMount() {
         this.movies = await fetchMovies();
-        debugger;
         this.movies = this.movies.filter(movie => movie.isFavorite);
     }
 }

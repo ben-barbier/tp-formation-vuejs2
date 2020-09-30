@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Movies from '../views/Home.vue';
 import Favorites from '../views/Favorites.vue';
+import MovieDetail from '../views/MovieDetail.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,12 @@ const routes: Array<RouteConfig> = [
     {
         path: '/starred',
         redirect: '/favorites',
+    },
+    {
+        path: '/movie/:id',
+        name: 'MovieDetail',
+        component: MovieDetail,
+        props: true,
     },
     {
         path: '/*',
