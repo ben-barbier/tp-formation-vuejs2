@@ -8,7 +8,7 @@
         <v-navigation-drawer v-model="drawer" absolute temporary>
             <v-list nav dense>
                 <v-list-item-group active-class="deep-purple--text text--accent-4">
-                    <router-link to="/">
+                    <router-link :to="{ name: 'Movies' }">
                         <v-list-item>
                             <v-list-item-icon>
                                 <v-icon>mdi-home</v-icon>
@@ -17,12 +17,21 @@
                         </v-list-item>
                     </router-link>
 
-                    <router-link to="/about">
+                    <router-link :to="{ name: 'About' }">
                         <v-list-item>
                             <v-list-item-icon>
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
                             <v-list-item-title>A Propos</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+
+                    <router-link :to="{ name: 'Favorites' }">
+                        <v-list-item>
+                            <v-list-item-icon>
+                                <v-icon>mdi-star</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Favoris</v-list-item-title>
                         </v-list-item>
                     </router-link>
                 </v-list-item-group>
