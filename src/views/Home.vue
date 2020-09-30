@@ -13,6 +13,7 @@
                         :movie="movie"
                         @edit-movie="editMovie(movie)"
                         @save-movie="saveEditedMovie($event)"
+                        @toggle-favorite="toggleFavorite(movie)"
                     ></movie-card>
 
                     <add-movie @add-movie="addMovie($event)"></add-movie>
@@ -29,7 +30,7 @@ import SearchBar from '@/components/SearchBar.vue';
 import AddMovie from '@/components/AddMovie.vue';
 import { Component, Vue } from 'vue-property-decorator';
 import { Movie } from '@/models/movie.model';
-import { fetchMovies } from '@/data/movies.api';
+import { fetchMovies, updateMovieFavorite } from '@/data/movies.api';
 
 @Component({
     components: {
@@ -51,7 +52,7 @@ export default class Home extends Vue {
         this.movies = this.movies.map(m => ({ ...m, isEditing: m.id === movie.id }));
     }
 
-    saveEditedMovie(editedMovie: Movie) {
+    async saveEditedMovie(editedMovie: Movie) {
         this.movies = this.movies
             .map(movie => (movie.id === editedMovie.id ? editedMovie : movie))
             .map(movie => ({
@@ -70,6 +71,12 @@ export default class Home extends Vue {
     // 🚨: Les "computed" (nom JS) ne doivent pas modifier les données
     get visibleMovies() {
         return this.movies.filter(movie => movie.isVisible);
+    }
+
+    async toggleFavorite(movie: Movie) {
+        const updatedMovie = { ...movie, isFavorite: !movie.isFavorite };
+        await updateMovieFavorite(updatedMovie.id, updatedMovie.isFavorite);
+        this.saveEditedMovie(updatedMovie);
     }
 
     // watch: {
@@ -92,7 +99,7 @@ export default class Home extends Vue {
     async beforeMount() {
         // 💡 : Les appels d'API se font dans le 'created' ou 'beforeMount'
         this.movies = await fetchMovies();
-        this.movies = this.movies.map(movie => ({ ...movie, isVisible: true, isEditing: false, isFavorite: false }));
+        this.movies = this.movies.map(movie => ({ ...movie, isVisible: true, isEditing: false }));
 
         // this.$el = element avec les moustaches {{...}} dans le template
         console.log('beforeMount', this.title, this.$el);

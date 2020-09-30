@@ -8,7 +8,7 @@
                 <i v-else class="fa fa-save" @click="$emit('save-movie', movie)"></i>
             </p>
             <a class="card-header-icon">
-                <span class="icon" :class="{ 'is-favorite': movie.isFavorite }" @click="toggleFavorite(movie)">
+                <span class="icon" :class="{ 'is-favorite': movie.isFavorite }" @click="$emit('toggle-favorite')">
                     <i class="fa fa-star"></i>
                 </span>
             </a>
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Movie } from '@/models/movie.model';
 
 @Component
@@ -47,10 +47,6 @@ export default class MovieCard extends Vue {
 
     get title() {
         return this.movie.isFavorite ? `${this.movie.title} - ⭐️` : this.movie.title;
-    }
-
-    toggleFavorite(movie: Movie) {
-        movie.isFavorite = !movie.isFavorite;
     }
 }
 </script>
