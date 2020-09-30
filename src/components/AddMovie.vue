@@ -10,7 +10,7 @@
                 <br />
                 <br />
                 <label style="display: inline-block; width: 150px" for="desc">Description</label>
-                <input id="desc" v-model="newMovie.content" type="text" />
+                <input id="desc" v-model="newMovie.description" type="text" />
                 <br />
                 <br />
                 <label style="display: inline-block; width: 150px" for="img">Image</label>
@@ -18,7 +18,7 @@
                 <br />
                 <br />
                 <label style="display: inline-block; width: 150px" for="released">Date</label>
-                <input id="released" v-model="newMovie.date" type="text" />
+                <input id="released" v-model="newMovie.creation" type="text" />
                 <br />
                 <br />
                 <button type="submit">Sauvegarder</button>
@@ -36,9 +36,9 @@ export default class AddMovie extends Vue {
     newMovie: Movie = {
         title: '',
         image: '',
-        date: '',
-        content: '',
-        tags: [],
+        creation: '',
+        description: '',
+        genres: [],
         isEditing: false,
         isVisible: true,
         isFavorite: false,
@@ -46,7 +46,7 @@ export default class AddMovie extends Vue {
 
     addMovie(newMovie: Movie) {
         this.$emit('add-movie', newMovie);
-        this.newMovie = { ...this.newMovie, title: '', image: '', date: '', content: '' };
+        this.newMovie = { ...this.newMovie, title: '', image: '', creation: '', description: '' };
     }
 }
 </script>

@@ -21,13 +21,12 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p>{{ movie.date }}</p>
+                    <p>{{ movie.creation }}</p>
                     <p class="tags">
-                        <!-- FIXME : key -->
-                        <!-- <span class="tag" v-for="tag in movie.tags">{{ tag }}</span>-->
+                        <span class="tag" v-for="genre in movie.genres" :key="genre">{{ genre }}</span>
                     </p>
-                    <div class="content" v-if="!movie.isEditing">{{ movie.content }}</div>
-                    <div class="content" v-else><textarea v-model="movie.content"></textarea></div>
+                    <div class="content" v-if="!movie.isEditing">{{ movie.description }}</div>
+                    <div class="content" v-else><textarea v-model="movie.description"></textarea></div>
                 </div>
             </div>
         </div>

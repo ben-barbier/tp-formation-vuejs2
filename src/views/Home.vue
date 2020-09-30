@@ -24,12 +24,12 @@
 
 <script lang="ts">
 // @ is an alias to /src
-import { getMovies } from '@/data/api';
 import MovieCard from '@/components/MovieCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import AddMovie from '@/components/AddMovie.vue';
 import { Component, Vue } from 'vue-property-decorator';
 import { Movie } from '@/models/movie.model';
+import { fetchMovies } from '@/data/movies.api';
 
 @Component({
     components: {
@@ -91,7 +91,8 @@ export default class Home extends Vue {
 
     async beforeMount() {
         // 💡 : Les appels d'API se font dans le 'created' ou 'beforeMount'
-        this.movies = await getMovies();
+        this.movies = await fetchMovies();
+        this.movies = this.movies.map(movie => ({ ...movie, isVisible: true, isEditing: false, isFavorite: false }));
 
         // this.$el = element avec les moustaches {{...}} dans le template
         console.log('beforeMount', this.title, this.$el);
